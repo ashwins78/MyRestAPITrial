@@ -4,9 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
+application = Flask(__name__)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(application)
 
 class Bag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,11 +16,11 @@ class Bag(db.Model):
     def __repr__(self):
         return f"{self.id} - {self.name} - {self.use_count}"
 
-@app.route('/')
+@application.route('/')
 def index():
     return 'MyWebserver!'
 
-@app.route('/bags')
+@application.route('/bags')
 def get_bags():
     bags = Bag.query.all()
 
@@ -32,7 +32,7 @@ def get_bags():
 
     return {"bags" : result}
 
-@app.route('/bags/<id>')
+@application.route('/bags/<id>')
 def get_bag(id):
     bag = Bag.query.get(id)
     if bag is None:
@@ -41,7 +41,7 @@ def get_bag(id):
     bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
     return {"bag": bag_data}
 
-@app.route('/bags/<id>', methods=['PUT'])
+@application.route('/bags/<id>', methods=['PUT'])
 def bag_used(id):
     bag = Bag.query.get(id)
     if bag is None:
