@@ -20,7 +20,9 @@ def index():
 
 @application.route('/bags')
 def get_bags():
-    bags = Bag.query.all()
+#    bags = Bag.query.all()
+     bag1 = Bag(id = 1, name="Bag1", use_count=0)
+     bags.append(bag1)
 
     result = []
 
