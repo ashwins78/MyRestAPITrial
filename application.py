@@ -20,15 +20,15 @@ def index():
 
 @application.route('/bags')
 def get_bags():
-#    bags = Bag.query.all()
-     bag1 = Bag(id = 1, name="Bag1", use_count=0)
-     bags.append(bag1)
+    #bags = Bag.query.all()
 
     result = []
 
-    for bag in bags:
-        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-        result.append(bag_data)
+    #for bag in bags:
+    #    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+    #    result.append(bag_data)
+
+    result.append({'id': 1, 'name': "bag1", 'use_count': 0})
 
     return {"bags" : result}
 
