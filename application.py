@@ -18,17 +18,17 @@ class Bag(db.Model):
 def index():
     return 'MyWebserver!'
 
-#@application.route('/bags')
-#def get_bags():
-#    bags = Bag.query.all()
-#
-#    result = []
-#
-#    for bag in bags:
-#        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-#        result.append(bag_data)
-#
-#    return {"bags" : result}
+@application.route('/bags')
+def get_bags():
+    bags = Bag.query.all()
+
+    result = []
+
+    for bag in bags:
+        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+        result.append(bag_data)
+
+    return {"bags" : result}
 
 #@application.route('/bags/<id>')
 #def get_bag(id):
