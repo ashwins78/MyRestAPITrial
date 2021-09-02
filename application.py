@@ -20,38 +20,35 @@ def index():
 
 @application.route('/bags')
 def get_bags():
-    #bags = Bag.query.all()
-
     result = []
 
-    #for bag in bags:
-    #    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-    #    result.append(bag_data)
-
-    result.append({'id': 1, 'name': "bag1", 'use_count': 0})
+    bags = Bag.query.all()
+    for bag in bags:
+        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+        result.append(bag_data)
 
     return {"bags" : result}
 
-#@application.route('/bags/<id>')
-#def get_bag(id):
-#    bag = Bag.query.get(id)
-#    if bag is None:
-#        return {"error": "Unknown bag id"}
-#
-#    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-#    return {"bag": bag_data}
+@application.route('/bags/<id>')
+def get_bag(id):
+    bag = Bag.query.get(id)
+    if bag is None:
+        return {"error": "Unknown bag id"}
 
-#@application.route('/bags/<id>', methods=['PUT'])
-#def bag_used(id):
-#    bag = Bag.query.get(id)
-#    if bag is None:
-#        return {"error": "Unknown bag id"}
-#
-#    bag.use_count = Bag.use_count + 1
-#    db.session.commit()
-#
-#    #bag = Bag.query.get(id)
-#    #bag_data = {'id': new_bag.id, 'name': new_bag.name, 'use_count': new_bag.use_count}
-#
-#    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-#    return {"result": bag_data}
+    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+    return {"bag": bag_data}
+
+@application.route('/bags/<id>', methods=['PUT'])
+def bag_used(id):
+    bag = Bag.query.get(id)
+    if bag is None:
+        return {"error": "Unknown bag id"}
+
+    bag.use_count = Bag.use_count + 1
+    db.session.commit()
+
+    #bag = Bag.query.get(id)
+    #bag_data = {'id': new_bag.id, 'name': new_bag.name, 'use_count': new_bag.use_count}
+
+    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+    return {"result": bag_data}
