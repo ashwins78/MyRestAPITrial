@@ -2,33 +2,32 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-application = Flask(__name__)
-application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(application)
-
-app = application
 app_initialized = False
+application = create_app()
+#application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+#db = SQLAlchemy(application)
 
-def init_app(test_config=None):
-    global app
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+def create_app(test_config=None):
+    app = Flask(__name__)
+    #app.config.from_mapping(
+    #    SECRET_KEY='dev',
+    #    DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+    #)
 
-    if test_config is None:
+    #if test_config is None:
         # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
+    #    app.config.from_pyfile('config.py', silent=True)
+    #else:
         # load the test config if passed in
-        app.config.from_mapping(test_config)
+    #    app.config.from_mapping(test_config)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    #try:
+    #    os.makedirs(app.instance_path)
+    #except OSError:
+    #    pass
 
     app_initialized = True
+    return app
 #class Bag(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
 #    name = db.Column(db.String(10), unique=True, nullable=False)
@@ -80,5 +79,4 @@ def index():
 
 #main_called = False
 if __name__ == '__main__':
-    init_app()
     application.run()
