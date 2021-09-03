@@ -6,10 +6,13 @@ from flask_sqlalchemy import SQLAlchemy
 #application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 #db = SQLAlchemy(application)
 
-application = None
+app = Flask(__name__)
+application = app
 
-def create_app(test_config=None):
-    app = Flask(__name__)
+app_initialized = False
+
+def init_app(test_config=None):
+    global app
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -27,14 +30,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/')
-    def index():
-        return '!!!MYWEBSERVER!!!'
-
-    return app
-
-
-
+    app_initialized = True
 #class Bag(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
 #    name = db.Column(db.String(10), unique=True, nullable=False)
@@ -43,8 +39,12 @@ def create_app(test_config=None):
 #    def __repr__(self):
 #       return f"{self.id} - {self.name} - {self.use_count}"
 
-
-
+@application.route('/')
+def index():
+    if app_initialized is True:
+        return 'REST WEB SERVER'
+    else:
+        return 'Uninitialized wed server'   
 #@application.route('/bags')
 #def get_bags():
 #    result = []
@@ -82,5 +82,5 @@ def create_app(test_config=None):
 
 #main_called = False
 if __name__ == '__main__':
-    application = create_app()
+    init_app()
     application.run()
