@@ -27,7 +27,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    @app.route('/')
+    def index():
+        return '!!!MYWEBSERVER!!!'
+
     return app
+
+
 
 #class Bag(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
@@ -37,9 +43,7 @@ def create_app(test_config=None):
 #    def __repr__(self):
 #       return f"{self.id} - {self.name} - {self.use_count}"
 
-@application.route('/')
-def index():
-    return '!!!MYWEBSERVER!!!'
+
 
 #@application.route('/bags')
 #def get_bags():
