@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 #application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 #db = SQLAlchemy(application)
 
+application = None
+
 def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_mapping(
@@ -25,10 +27,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/')
-    def index():
-        return '!!!MYWEBSERVER!!!'
-
     return app
 
 #class Bag(db.Model):
@@ -39,12 +37,9 @@ def create_app(test_config=None):
 #    def __repr__(self):
 #       return f"{self.id} - {self.name} - {self.use_count}"
 
-#@application.route('/')
-#def index():
-#    if main_called:
-#        return '!!!MYWEBSERVER!!!'
-#    else:
-#        return 'MyWebserver!'
+@application.route('/')
+def index():
+    return '!!!MYWEBSERVER!!!'
 
 #@application.route('/bags')
 #def get_bags():
@@ -82,6 +77,6 @@ def create_app(test_config=None):
 #    return {"result": bag_data}
 
 #main_called = False
-#if __name__ == '__main__':
-#    main_called = True
-#    app.run()
+if __name__ == '__main__':
+    application = create_app()
+    application.run()
