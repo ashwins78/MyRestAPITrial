@@ -2,13 +2,11 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-#application = Flask(__name__)
-#application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-#db = SQLAlchemy(application)
+application = Flask(__name__)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(application)
 
-app = Flask(__name__)
-application = app
-
+app = application
 app_initialized = False
 
 def init_app(test_config=None):
@@ -44,7 +42,7 @@ def index():
     if app_initialized is True:
         return 'REST WEB SERVER'
     else:
-        return 'Uninitialized wed server'   
+        return 'Uninitialized wed server'
 #@application.route('/bags')
 #def get_bags():
 #    result = []
