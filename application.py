@@ -3,11 +3,13 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app_initialized = False
-application = create_app()
+
 #application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 #db = SQLAlchemy(application)
 
 def create_app(test_config=None):
+    global app_initialized
+
     app = Flask(__name__)
     #app.config.from_mapping(
     #    SECRET_KEY='dev',
@@ -28,6 +30,9 @@ def create_app(test_config=None):
 
     app_initialized = True
     return app
+
+application = create_app()
+
 #class Bag(db.Model):
 #    id = db.Column(db.Integer, primary_key=True)
 #    name = db.Column(db.String(10), unique=True, nullable=False)
