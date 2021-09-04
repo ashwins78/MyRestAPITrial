@@ -33,27 +33,15 @@ def create_app(test_config=None):
     db.init_app(app)
     return app
 
-    #app.config.from_mapping(
-    #    SECRET_KEY='dev',
-    #    DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    #)
-
-    #if test_config is None:
-        # load the instance config, if it exists, when not testing
-    #    app.config.from_pyfile('config.py', silent=True)
-    #else:
-        # load the test config if passed in
-    #    app.config.from_mapping(test_config)
-
 application = create_app()
 
-#class Bag(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    name = db.Column(db.String(10), unique=True, nullable=False)
-#    use_count = db.Column(db.Integer)
+class Bag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), unique=True, nullable=False)
+    use_count = db.Column(db.Integer)
 
-#    def __repr__(self):
-#       return f"{self.id} - {self.name} - {self.use_count}"
+    def __repr__(self):
+       return f"{self.id} - {self.name} - {self.use_count}"
 
 @application.route('/')
 def index():
@@ -94,6 +82,5 @@ def index():
 #    bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
 #    return {"result": bag_data}
 
-#main_called = False
 if __name__ == '__main__':
     application.run()
