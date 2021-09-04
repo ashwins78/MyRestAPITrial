@@ -2,15 +2,37 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-app_initialized = False
-
-#application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-#db = SQLAlchemy(application)
+db = SQLAlchemy()
 
 def create_app(test_config=None):
-    global app_initialized
-
     app = Flask(__name__)
+    if 'RDS_HOSTNAME' in os.environ:
+        print('Using rds db')
+        DATABASE = {
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+        database_url = 'postgresql://' + DATABASE['USER']
+        database_url += ':' + DATABASE['PASSWORD']
+        database_url += '@' + DATABASE['HOST']
+        database_url += ':' + DATABASE['PORT']
+        database_url += '/' + DATABASE['NAME']
+    else:
+        print('Using local db')
+        database_url = 'sqlite:///' + os.path.join(app.instance_path, 'test.db')
+
+    app.config.from_mapping(
+        SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev_key',
+        SQLALCHEMY_DATABASE_URI = database_url,
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
+    )
+
+    db.init_app(app)
+    return app
+
     #app.config.from_mapping(
     #    SECRET_KEY='dev',
     #    DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -22,14 +44,6 @@ def create_app(test_config=None):
     #else:
         # load the test config if passed in
     #    app.config.from_mapping(test_config)
-
-    #try:
-    #    os.makedirs(app.instance_path)
-    #except OSError:
-    #    pass
-
-    app_initialized = True
-    return app
 
 application = create_app()
 
