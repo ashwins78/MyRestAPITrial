@@ -47,16 +47,16 @@ class Bag(db.Model):
 def index():
     return 'REST WEB SERVER'
 
-#@application.route('/bags')
-#def get_bags():
-#    result = []
+@application.route('/bags')
+def get_bags():
+    result = []
 
-#    bags = Bag.query.all()
-#    for bag in bags:
-#        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
-#        result.append(bag_data)
+    bags = Bag.query.all()
+    for bag in bags:
+        bag_data = {'id': bag.id, 'name': bag.name, 'use_count': bag.use_count}
+        result.append(bag_data)
 
-#    return {"bags" : result}
+    return {"bags" : result}
 
 #@application.route('/bags/<id>')
 #def get_bag(id):
