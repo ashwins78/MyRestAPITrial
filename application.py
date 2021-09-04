@@ -57,10 +57,8 @@ application = create_app()
 
 @application.route('/')
 def index():
-    if app_initialized is True:
-        return 'REST WEB SERVER'
-    else:
-        return 'Uninitialized wed server'
+    return 'REST WEB SERVER'
+
 #@application.route('/bags')
 #def get_bags():
 #    result = []
